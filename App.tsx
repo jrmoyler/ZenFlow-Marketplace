@@ -74,6 +74,7 @@ function App() {
 
   const handleSelectProduct = (product: Product) => {
     setSelectedProduct(product);
+    window.scrollTo(0, 0);
   };
 
   const handleBack = () => {
@@ -104,20 +105,18 @@ function App() {
     setSelectedProduct(null); // Ensure we're not stuck in detail view
   }
 
-  if (selectedProduct) {
-    return <ProductDetail product={selectedProduct} onBack={handleBack} />;
-  }
-
   return (
-    <div className="bg-slate-900 text-slate-100 min-h-screen font-sans">
+    <div className="bg-slate-900 text-slate-100 min-h-screen font-sans flex flex-col">
       <Header 
         searchQuery={searchQuery}
         onSearch={handleSearch}
         onNavigate={handleNavigate}
         currentView={view}
       />
-      <main className="container mx-auto px-4 py-8">
-        {view === 'marketplace' ? (
+      <main className="container mx-auto px-4 py-8 flex-grow">
+        {selectedProduct ? (
+          <ProductDetail product={selectedProduct} onBack={handleBack} />
+        ) : view === 'marketplace' ? (
           <div className="lg:grid lg:grid-cols-4 lg:gap-8">
             <aside className="lg:col-span-1 mb-8 lg:mb-0 lg:sticky top-24 h-fit">
               <FilterBar 

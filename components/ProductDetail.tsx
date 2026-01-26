@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Product } from '../types';
 import ArrowLeftIcon from './icons/ArrowLeftIcon';
 import SparklesIcon from './icons/SparklesIcon';
+import XIcon from './icons/XIcon';
 import TestChamber from './TestChamber';
 
 interface ProductDetailProps {
@@ -11,20 +12,45 @@ interface ProductDetailProps {
 
 const ProductDetail: React.FC<ProductDetailProps> = ({ product, onBack }) => {
   const [showTestChamber, setShowTestChamber] = useState(false);
-  const [purchaseMessage, setPurchaseMessage] = useState<string | null>(null);
+  const [showPurchaseModal, setShowPurchaseModal] = useState(false);
 
   const handleBuy = () => {
-      setPurchaseMessage(`Thank you for purchasing ${product.name}! A confirmation has been sent to your email.`);
-      setTimeout(() => setPurchaseMessage(null), 5000);
+      setShowPurchaseModal(true);
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fade-in">
-      {purchaseMessage && (
-        <div role="alert" className="fixed top-5 right-5 bg-primary-600 text-white py-3 px-5 rounded-lg shadow-lg z-50 animate-fade-in-down">
-          {purchaseMessage}
-        </div>
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fade-in relative">
+      {/* Purchase Modal */}
+      {showPurchaseModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-sm animate-fade-in">
+              <div className="bg-slate-800 border border-slate-700 rounded-2xl p-8 max-w-md w-full shadow-2xl relative animate-fade-in-down">
+                  <button
+                      onClick={() => setShowPurchaseModal(false)}
+                      className="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors"
+                      aria-label="Close modal"
+                  >
+                      <XIcon className="w-6 h-6" />
+                  </button>
+                  <div className="text-center">
+                      <div className="bg-primary-500/20 text-primary-400 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                          <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
+                      </div>
+                      <h3 className="text-2xl font-bold text-white mb-2">Purchase Successful!</h3>
+                      <p className="text-slate-300 mb-6 leading-relaxed">
+                          Thank you for purchasing <span className="text-primary-400 font-semibold">{product.name}</span>.
+                          A confirmation email has been sent to you with the next steps.
+                      </p>
+                      <button
+                          onClick={() => setShowPurchaseModal(false)}
+                          className="w-full bg-primary-600 hover:bg-primary-500 text-white font-bold py-3 px-6 rounded-lg transition-colors shadow-lg shadow-primary-500/20"
+                      >
+                          Continue Shopping
+                      </button>
+                  </div>
+              </div>
+          </div>
       )}
+
       <button
         onClick={onBack}
         className="flex items-center text-sm text-slate-400 hover:text-primary-400 transition-colors mb-6 group"
