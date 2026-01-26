@@ -41,6 +41,7 @@ const Header: React.FC<HeaderProps> = ({ searchQuery, onSearch, onNavigate, curr
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const newQuery = e.target.value;
         setLocalQuery(newQuery);
+        onSearch(newQuery);
         if (newQuery.length > 1) {
             setShowSuggestions(true);
         } else {
