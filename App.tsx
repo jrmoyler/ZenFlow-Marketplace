@@ -3,6 +3,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { products } from './constants';
 import { Product, ProductType } from './types';
 import Header from './components/Header';
+import SearchIcon from './components/icons/SearchIcon';
 import ProductCard from './components/ProductCard';
 import ProductDetail from './components/ProductDetail';
 import FilterBar from './components/FilterBar';
@@ -113,7 +114,7 @@ function App() {
         onNavigate={handleNavigate}
         currentView={view}
       />
-      <main className="container mx-auto px-4 py-8 flex-grow">
+      <main className="container mx-auto px-4 py-16 flex-grow">
         {selectedProduct ? (
           <ProductDetail product={selectedProduct} onBack={handleBack} />
         ) : view === 'marketplace' ? (
@@ -151,9 +152,23 @@ function App() {
                   )}
                 </>
               ) : (
-                <div className="text-center py-16">
-                  <h2 className="text-2xl font-bold text-slate-300">No Products Found</h2>
-                  <p className="text-slate-400 mt-2">Try adjusting your search or filters.</p>
+                <div className="text-center py-24">
+                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-slate-800 mb-6">
+                    <SearchIcon className="w-8 h-8 text-slate-500" />
+                  </div>
+                  <h2 className="text-xl font-bold text-slate-200 mb-2">No results found</h2>
+                  <p className="text-slate-400 max-w-sm mx-auto">
+                    We couldn't find any products matching your criteria. Try clearing your filters or searching for something else.
+                  </p>
+                  <button
+                    onClick={() => {
+                        setSearchQuery('');
+                        setFilters({ type: 'all', tags: [] });
+                    }}
+                    className="mt-6 text-primary-400 hover:text-primary-300 font-medium transition-colors"
+                  >
+                    Clear all filters
+                  </button>
                 </div>
               )}
             </div>
