@@ -66,12 +66,12 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, onBack }) => {
           </div>
           <div className="p-8 flex flex-col justify-between">
             <div>
-              <div className="uppercase tracking-wide text-sm text-primary-400 font-semibold">{product.type}</div>
-              <h1 className="block mt-1 text-3xl leading-tight font-extrabold text-gradient">{product.name}</h1>
-              <p className="mt-1 text-slate-400">by {product.author}</p>
+              <div className="uppercase tracking-wide text-xs text-primary-400 font-bold mb-2">{product.type}</div>
+              <h1 className="block mt-1 text-4xl leading-tight font-bold text-slate-100">{product.name}</h1>
+              <p className="mt-2 text-slate-400 text-lg">by {product.author}</p>
             </div>
             <div className="mt-4">
-                 <span className="text-4xl font-bold text-gradient">
+                 <span className="text-4xl font-bold text-slate-100">
                     ${product.price.toFixed(2)}
                     {product.id.startsWith('ret-') && <span className="text-xl font-normal text-slate-400">/month</span>}
                  </span>

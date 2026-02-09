@@ -36,54 +36,47 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onSelect, activeTags
 
   return (
     <div
-      className="bg-slate-800/50 rounded-xl overflow-hidden shadow-lg hover:shadow-xl hover:shadow-primary-400/20 transition-all duration-300 flex flex-col group cursor-pointer border border-slate-700 hover:border-primary-600/50 hover:scale-[1.02] hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-primary-500"
+      className="bg-slate-800/50 rounded-xl overflow-hidden border border-slate-700 hover:border-primary-500/30 hover:shadow-xl transition-all duration-300 flex flex-col group cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary-500"
       onClick={() => onSelect(product)}
       onKeyDown={handleKeyDown}
       role="button"
       tabIndex={0}
       aria-label={`View details for ${product.name}`}
     >
-      <div className="relative">
-        <img className="w-full h-48 object-cover" src={product.imageUrl} alt={product.name} />
-        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-slate-800 via-slate-800/50 to-transparent"></div>
+      <div className="relative h-48 overflow-hidden">
+        <img className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src={product.imageUrl} alt={product.name} />
       </div>
       <div className="p-6 flex flex-col flex-grow">
-        <div className="flex justify-between items-start mb-2">
-            <div className="flex-1">
-                <div className="font-bold text-xl text-slate-100 group-hover:text-primary-400 transition-colors duration-300">
-                    <HighlightMatch text={product.name} highlight={searchQuery} />
-                </div>
-                <p className="text-sm text-slate-400">{product.author}</p>
-            </div>
-            <div className="bg-slate-700/50 p-2 rounded-full">
-                <ProductTypeIcon type={product.type} />
-            </div>
+        <div className="mb-3">
+          <div className="font-bold text-lg text-slate-100 mb-1 group-hover:text-primary-400 transition-colors">
+             <HighlightMatch text={product.name} highlight={searchQuery} />
+          </div>
         </div>
-        <p className="text-slate-300 text-base mb-4">
+
+        <p className="text-slate-400 text-sm mb-6 line-clamp-2">
           <HighlightMatch text={product.description} highlight={searchQuery} />
         </p>
-        <div className="mb-4 flex flex-wrap gap-2">
-          {product.tags.map(tag => (
-            <span
-              key={tag}
-              className={`text-xs font-medium px-2.5 py-1 rounded-full transition-colors ${
-                activeTags.includes(tag)
-                  ? 'bg-primary-500/80 text-white'
-                  : 'bg-slate-700 text-slate-300'
-              }`}
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
-        <div className="flex justify-between items-center mt-auto pt-4 border-t border-slate-700/50">
-          <span className="text-2xl font-bold text-gradient">
-            ${product.price.toFixed(2)}
-            {product.id.startsWith('ret-') && <span className="text-base font-normal text-slate-400">/month</span>}
-          </span>
-          <div className="bg-slate-700 text-slate-200 font-semibold py-2 px-4 rounded-lg group-hover:bg-primary-600 group-hover:text-white transition-all duration-300 group-hover:shadow-[0_0_15px_-3px_theme(colors.primary.500)]" aria-hidden="true">
-            View Details
-          </div>
+
+        <div className="mt-auto flex justify-between items-end">
+             <div className="flex flex-wrap gap-2">
+              {product.tags.slice(0, 2).map(tag => (
+                <span
+                  key={tag}
+                  className={`text-[10px] uppercase tracking-wider font-semibold px-2 py-1 rounded-md ${
+                    activeTags.includes(tag)
+                      ? 'bg-primary-500/20 text-primary-400'
+                      : 'bg-slate-700/50 text-slate-400'
+                  }`}
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+
+             <span className="text-lg font-semibold text-slate-100">
+                ${product.price.toFixed(2)}
+                {product.id.startsWith('ret-') && <span className="text-xs text-slate-500 font-normal ml-1">/mo</span>}
+             </span>
         </div>
       </div>
     </div>
